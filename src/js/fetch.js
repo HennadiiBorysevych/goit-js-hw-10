@@ -5,7 +5,9 @@ export default function fetchCountries(countryname) {
     `https://restcountries.com/v3.1/name/${countryname}?fields=name,capital,population,flags,languages`
   ).then(response => {
     if (!response.ok) {
-      Notify.failure('Oops, there is no country with that name');
+      throw new Error(
+        Notify.failure('Oops, there is no country with that name')
+      );
     }
     return response.json();
   });

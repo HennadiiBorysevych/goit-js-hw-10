@@ -19,25 +19,31 @@ searchCountry.addEventListener(
 
 function matchedCountries(e) {
   const inputName = e.target.value;
-  if (!inputName) return;
+  if (!inputName) {
+    resetSearch();
+    return;
+  }
 
   fetchCountries(inputName.trim())
     .then(country => {
-      if (country.length === 1) {
-        chosenCountryList.innerHTML = handlechosenCountryInfo(country);
-        countryOptionsList.innerHTML = '';
-      }
-      if (country.length <= 10 && country.length >= 2) {
-        countryOptionsList.innerHTML = handleCountriesMarkUpList(country);
-        chosenCountryList.innerHTML = '';
-      }
-      if (country.length >= 10) {
+      if (country.length > 10) {
         Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
+      } else if (country.length > 1) {
+        countryOptionsList.innerHTML = handleCountriesMarkUpList(country);
+        chosenCountryList.innerHTML = '';
+      } else {
+        chosenCountryList.innerHTML = handlechosenCountryInfo(country);
+        countryOptionsList.innerHTML = '';
       }
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
     });
+}
+
+function resetSearch() {
+  chosenCountryList.innerHTML = '';
+  countryOptionsList.innerHTML = '';
 }

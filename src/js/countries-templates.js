@@ -22,7 +22,6 @@ export function handlechosenCountryInfo(country) {
       <p class="country__text"><span class="country__item--accent">Languages:</span> ${langs}</p>
       </li>
       </ul>`;
-    console.log(str);
     return str;
   }, '');
 }
